@@ -1,0 +1,12 @@
+@mixin flex($jc: flex-start, $ai: center, $fw: nowrap) {
+    display: flex;
+    justify-content: $jc;
+    align-items: $ai;
+    flex-wrap: $fw;
+}
+
+@mixin text-title {
+    font-family: inherit;
+    font-weight: 400;
+    font-size: 22px;
+}
