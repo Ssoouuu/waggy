@@ -11,6 +11,7 @@ const Products = ({ searchProducts, setSearchProducts, addToCart, increase, decr
   const [showBird, setShowBird] = useState(true);
 
   // Синхронизация внутреннего поиска с глобальным из Header
+  // когда пользователь пишет что-то в хедере, данные меняются там, а через пропсы прилетают сюда. Этот useEffect ловит изменения и мгновенно обновляет список товаров на странице.
   useEffect(() => {
     setFilterText(searchProducts);
   }, [searchProducts])
@@ -51,7 +52,7 @@ const Products = ({ searchProducts, setSearchProducts, addToCart, increase, decr
   };
 
   const handleCat = () => {
-    if (allActive) {
+    if (allActive) { 
       setShowCats(true);
       setShowDogs(false);
       setShowBird(false);
