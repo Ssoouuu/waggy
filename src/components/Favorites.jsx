@@ -4,14 +4,18 @@ import Product from './Product';
 import { Link } from 'react-router-dom';
 
 const Favorites = ({ like, toggleLike, cart, increase, decrease, addToCart, clearFavorites }) => {
+    // ФОРМИРОВАНИЕ СПИСКА
+    // .map(...): Проходимся по всем товарам из нашей базы данных (ALL_PRODUCTS).
     const likeItems = ALL_PRODUCTS.map(product => {
         if (!like.includes(product.index)) return null;
 
         return {
             ...product,
+            // Мы заглядываем в корзину, чтобы узнать: «А не лежит ли этот избранный товар уже в корзине?». Если лежит, мы подтягиваем его количество, чтобы кнопка в карточке товара отображалась правильно
             count: cart[product.index] || 0,
             priceNum: product.price
         };
+        // Эта команда выкидывает из массива все те null, которые мы насобирали
     }).filter(Boolean);
 
     // Удаление
