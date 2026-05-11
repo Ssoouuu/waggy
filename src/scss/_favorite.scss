@@ -1,0 +1,14 @@
+@use "vars" as *;
+@use "mixin" as *;
+@use "products" as *;
+
+.favorite {
+    margin-bottom: 50px;
+    &-btn {
+        width: 20%;
+    }
+
+    &-btns {
+        justify-content: end;
+    }
+}

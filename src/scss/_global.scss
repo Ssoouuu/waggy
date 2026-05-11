@@ -1,4 +1,8 @@
+@use "vars" as *;
+@use "mixin" as *;
+
 @import url('https://fonts.googleapis.com/css2?family=Chilanka&display=swap');
+
 
 * {
   margin: 0;
@@ -12,14 +16,8 @@ body {
   font-family: "Chilanka", cursive;
 }
 
-.text_accent {
-  color: #DEAD6F;
-}
-
-.container {
-    max-width: 1440px;
-    margin: 0 auto;
-    padding: 0 40px;
+.section {
+  padding: 0 20%;
 }
 
 .hero {
@@ -40,7 +38,7 @@ body {
   }
 
   &__label {
-    color: #DEAD6F;
+    color: $span;
     font-size: 18px;
     letter-spacing: 10%;
   }
@@ -50,10 +48,25 @@ body {
     margin: 20px 0 30px;
 
     span {
-      color: #DEAD6F;
+      color: $span;
     }
     
 }
+.btn {
+      padding: 28px 74px;
+      border: 1px solid $text;
+      background: transparent;
+      border-radius: 4px;
+      font-size: 19px;
+      color: $text;
+      @include text-title;
+      transition: 0.3s ease;
+
+    }
+
+    .btn:hover {
+        background: $span;
+    }
 
   @media (max-width: 720px) {
  .hero__content {
@@ -63,6 +76,12 @@ body {
 
 }
 
+
+.custom-pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
 
 
 .offer {
@@ -120,35 +139,7 @@ body {
 }
 
 .gallery {
-  padding: 85px 10px;
-
- &__grid {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 10px;
-  }
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+    display: flex;
+    gap: 20px;
+    padding: 50px 10px;
 }
-
-.footer {
-  padding: 48px 0;
-  background: #F7EEE4;
-  text-align: center;
-
-  &__copy {
-    color: #908F8D;
-    margin-bottom: 14px;
-    font-size: 18px;
-  }
-}
-
-@media (max-width: 720px) {
-  
-  .gallery__grid {
-    grid-template-columns: repeat(2, 1fr);
-  }}

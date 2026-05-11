@@ -1,0 +1,173 @@
+@use "vars" as *;
+@use "mixin" as *;
+@use "products" as *;
+
+.cart {
+    &__content {
+        display: flex;
+        background-color: $background;
+        margin: 20px 0px 50px 0px;
+        padding: 12px 18px;
+        justify-content: space-between;
+
+        h1 {
+            font-size: 55px;
+            font-weight: 300;
+            padding-top: 15px;
+        }
+
+        p {
+            font-size: 55px;
+            font-weight: 300;
+        }
+
+        &-btns {
+            display: flex;
+            gap: 55px;
+            width: 60%;
+
+            .product__btn {
+                width: 100%;
+                text-transform: uppercase;
+            }
+        }
+
+        &.total {
+            p {
+                padding-top: 15px;
+            }
+
+            .total-price {
+                font-weight: 600;
+                color: $span;
+                font-size: 48px;
+            }
+
+            .product__btn {
+                width: 27%;
+                text-transform: uppercase;
+            }
+        }
+    }
+
+    .product {
+        &__cards {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            margin-top: 25px;
+            gap: 20px;
+        }
+
+        &__card {
+            position: relative;
+
+            .product-checkbox {
+                position: absolute;
+                margin: 10px;
+                width: 32px;
+                height: 32px;
+                appearance: none;
+                background: $light-gray;
+                border: 2px solid #ddd;
+                border-radius: 6px;
+                cursor: pointer;
+                transition: 0.1s;
+                &:checked {
+                    background: $light-gray;
+
+                    &::before {
+                        content: "∨";
+                        display: block;
+                        text-align: center;
+                        font-size: 32px;
+                        line-height: 1;
+                        color: $span;
+                    }
+                }
+            }
+
+            .favorite-icon {
+                position: absolute;
+                margin: 10px;
+                right: 0px;
+            }
+        }
+
+        // &__btns {
+        //     display: flex;
+        //     width: 100%;
+        //     gap: 10px;
+        //     font-size: 25px;
+
+        //     p {
+        //         border: 1px solid $light-gray;
+        //         margin: auto 0;
+        //         width: 30%;
+        //         padding: 5px 0px;
+        //         text-align: center;
+        //         border-radius: 4px;
+        //         font-size: 30px;
+        //     }
+
+        //     .circle {
+        //         width: 45px;
+        //         height: 45px;
+        //         border-radius: 50%;
+        //         transition: all 0.3s ease;
+
+        //         &:hover {
+        //             background: $span;
+        //         }
+        //     }
+        // }
+
+        &__button:nth-child(3) {
+            background: $span;
+
+            transition: all 0.3s ease;
+
+            &:hover {
+                background: $light-gray;
+            }
+        }
+
+        &__button:nth-child(4) {
+            background: none;
+            border: 1px solid $light-gray;
+            border-radius: 4px;
+            padding: 5px 10px;
+            transition: all 0.3s ease;
+
+            &:hover {
+                background: $light-gray;
+            }
+        }
+    }
+}
+
+.empty {
+    align-items: center;
+    text-align: center;
+    margin: 40px;
+    img {
+        align-items: center;
+        margin: 30px auto;
+    }
+
+    h2 {
+        font-size: 55px;
+        font-weight: 400;
+        margin-bottom: 30px;
+    }
+
+    p {
+        font-size: 32px;
+        color: $span;
+    }
+
+    button {
+        width: 20%;
+        margin-top: 50px;
+        text-transform: uppercase;
+    }
+}
