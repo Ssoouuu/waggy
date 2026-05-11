@@ -18,13 +18,15 @@ const App = () => {
   // ПОИСК ТОВАРОВ
   const [searchProducts, setSearchProducts] = useState('');
 
-  // Корзина: объект { productIndex: количество }
+  // КОРЗИНА: объект { productIndex: количество }, Инициализация корзины, Мы ищем в памяти браузера строчку с ключом 'cart'. Если она есть — превращаем её из текста в JavaScript-объект через JSON.parse. Если пусто — создаем пустой объект {}.
   const [cart, setCart] = useState(() => {
     const saved = localStorage.getItem('cart');
     return saved ? JSON.parse(saved) : {};
   });
 
-  // Функция, которая добавляет товар в корзину
+  // ФУНКЦИЯ, КОТОРАЯ ДОБАВЛЯЕТ ТОВАР В КОРЗИНУ
+  // prev: Это текущее состояние корзины до клика, 
+  // [productId]: ... + 1: Мы находим товар по его ID. Если его еще нет в корзине (prev[productId] выдаст undefined), мы берем 0 и прибавляем 1. Если был — просто увеличиваем цифру.
   const addToCart = (productId) => {
     setCart(prev => ({
       ...prev,
@@ -32,13 +34,13 @@ const App = () => {
     }));
   };
 
-  // Сохраняем изменение cart в localStorage
+  // Сохраняем изменение cart в localStorage, Автоматическое сохранение
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cart));
   }, [cart]);
 
 
-  // Увеличение количества (в корзине)
+  // УВЕЛИЧЕНИЕ КОЛИЧЕСТВА (в корзине)
   const increase = (productId) => {
     setCart(prev => ({
       ...prev,
@@ -46,12 +48,15 @@ const App = () => {
     }));
   };
 
-  // Уменьшение количества (в корзине) – если станет 0, удаляем ключ
+  // УМЕНЬШЕНИЕ КОЛИЧЕСТВА (в корзине) – если станет 0, удаляем ключ
   const decrease = (productId) => {
     setCart(prev => {
-      const newCount = (prev[productId] || 0) - 1;
+      // если этого товара в корзине вдруг нет (он undefined), тогда считай, что его 0
+      const newCount = (prev[productId] || 0) - 1; 
       if (newCount <= 0) {
+        // «Извлеки товар с этим ID в техническую переменную _ (нижнее подчеркивание значит "нам это не важно"), а всё ОСТАЛЬНОЕ положи в объект rest»
         const { [productId]: _, ...rest } = prev; // удаляем ключ
+        // rest — это копия старой корзины, но уже без этого товара
         return rest;
       }
       return { ...prev, [productId]: newCount };
@@ -62,7 +67,7 @@ const App = () => {
   // Если newCount > 0, просто обновляем количество.
   // Благодаря filter в Cart товары с нулевым количеством всё равно не будут показываться, но лучше удалять их сразу из состояния, чтобы не хранить мусор.
 
-  // Общее количество товаров (сумма всех count)
+  // ОБЩЕЕ КОЛИЧЕСТВО ТОВАРОВ (сумма всех count)
   const totalQuantity = Object.values(cart).reduce((sum, count) => sum + count, 0);
   // Object.values(cart) – превращает объект в массив значений: например, { "1": 2, "2": 1 } → [2, 1].
   // .reduce((sum, count) => sum + count, 0) – складывает все числа, начиная с 0.
@@ -84,6 +89,7 @@ const App = () => {
       return newCart;
     })
   }
+  // ...prev — копируем туда все товары, которые уже лежали в корзине
 
 
   // ИЗБРАННОЕ
@@ -93,7 +99,7 @@ const App = () => {
     return saved ? JSON.parse(saved) : [];
   });
 
-  // Добавление / удаление в избранное
+  // ДОБАВЛЕНИЕ / УДАЛЕНИЕ В ИЗБРАННОЕ
   const toggleLike = (productId) => {
     setLike(prev => {
       if (prev.includes(productId)) {
@@ -105,13 +111,16 @@ const App = () => {
       }
     });
   };
+// Метод includes проверяет: «А есть ли уже в этом списке ID товара, на который только что нажали?».
+// filter: Он создает новый массив, пропуская через себя все элементы старого.
+// id !== productId: Мы говорим фильтру: «Оставь все товары, кроме того, чей ID совпадает с нажатым».
 
-  // сохранение изменений избранных в localStorage
+  // СОХРАНЕНИЕ ИЗМЕНЕНИЙ ИЗБРАННЫХ В LOCALSTORAGE
   useEffect(() => {
     localStorage.setItem('favorites', JSON.stringify(like))
   }, [like])
 
-  // всего в избранном
+  // ВСЕГО В ИЗБРАННОМ
   const likesQuantity = like.length;
 
   return (
