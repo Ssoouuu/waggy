@@ -8,18 +8,21 @@ import Product from './Product';
 
 const Cart = ({ cart, increase, decrease, clearCart, removeItems, toggleLike, like }) => {
 
+  // Это внутреннее состояние корзины. Оно нужно для работы чекбоксов
   const [selectedId, setSelectedId] = useState([])
 
   // ВЫВОД ТОВАРОВ
   // Превращаем объект корзины в массив товаров для отображения
+  // Object.entries(cart): Превращает объект в массив списков: [["3", 2]].
   const cartItems = Object.entries(cart)
+  // map + find: Для каждого ID мы идем в базу данных ALL_PRODUCTS и вытаскиваем полную информацию о товаре.
     .map(([index, count]) => {
       const product = ALL_PRODUCTS.find(p => p.index === index);
       if (!product) return null;
       return {
         ...product,
         count,
-        priceNum: product.price // предполагаем, что price уже число
+        priceNum: product.price
       };
     })
     .filter(item => item !== null);
@@ -50,11 +53,14 @@ const Cart = ({ cart, increase, decrease, clearCart, removeItems, toggleLike, li
 
 
   // ДЛЯ ФУТЕРА - изменение итоговой суммы
+  // сумма всех штук.
   const totalCount = cartItems.reduce((sum, item) => sum + item.count, 0);
+  // умножает цену каждого товара на его количество и складывает всё в одну большую сумму
   const totalPrice = cartItems.reduce((sum, item) => sum + (item.priceNum * item.count), 0);
 
   // ВЫДЕЛЕНИЕ ТОВАРОВ
   // выбрать/снять товар
+  // Если ты ставишь галочку на товаре, его ID добавляется в этот массив. Снимаешь — удаляется.
   const handleSelect = (productId, isChecked) => {
     if (isChecked) {
       setSelectedId(prev => [...prev, productId])
