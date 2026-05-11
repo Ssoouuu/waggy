@@ -2,9 +2,12 @@ import Count from "./Count";
 
 const Product = ({ product, increase, decrease, selected, onSelectChange, toggleLike, isLiked, addToCart }) => {
 
+    // РАСЧЕТ ЦЕНЫ
     const count = product.count || 0;
     const totalPrice = count > 0
+    // Если товара в корзине больше 0, она умножает цену на количество.
         ? (product.priceNum * count).toFixed(2)
+        // Если товар еще не выбран — просто показывает цену за одну штуку.
         : product.priceNum.toFixed(2);
 
     return (
